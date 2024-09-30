@@ -96,15 +96,248 @@ INSERT INTO `Items` (`item_name`, `rarity`, `item_type`, `player_id`) VALUES
 SELECT `Players`.player_name, `Players`.`level` FROM `Players`;
 
 
-SELECT `Players`.`player_name`, `Guilds`.`id` FROM `Players`
+SELECT `Players`.`player_name`, `Guilds`.`id`
+	FROM `Players`
 	JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
 	WHERE `Guilds`.`id` = 3;
 
 
-SELECT `Players`.`player_name`, `Players`.`level` FROM `Players`
+SELECT `Players`.`player_name`, `Players`.`level`
+	FROM `Players`
 	WHERE `Players`.`level` >= 10;
 
 
-SELECT `Items`.`item_name` FROM `Players`
+SELECT `Items`.`item_name`
+	FROM `Players`
 	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
-	WHERE `Players`.`player_name` = 'Gandalf'
+	WHERE `Players`.`player_name` = 'Gandalf';
+
+
+SELECT `Items`.`item_name`
+	FROM `Items`
+	WHERE `Items`.`rarity` = 'Rare';
+	
+
+SELECT `Items`.`item_name`, `Items`.item_type
+	FROM `Items`
+	WHERE `Items`.`item_type` = 'Weapon';
+	
+
+SELECT `Guilds`.`guild_name`, COUNT(`Players`.`id`)
+	FROM `Players` 
+	JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
+	GROUP BY `Guilds`.`guild_name`;
+	
+
+SELECT `Players`.`player_name`, `Items`.`item_name`, `Items`.`item_type` FROM `Players`
+	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
+	WHERE `Items`.`item_type` = 'Armor';
+	
+
+SELECT `Players`.`player_name`, `Players`.`level`, `Guilds`.`guild_name`, `Guilds`.`guild_level`
+	FROM `Players`
+	JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
+	WHERE `Players`.`level` > 30 AND `Guilds`.`guild_level` >= 2;
+	
+	
+SELECT `Players`.`player_name`, `Items`.`item_name`, `Items`.`item_type`, `Items`.`rarity`
+	FROM `Players`
+	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
+	WHERE `Items`.`rarity` = 'Epic';
+	
+	
+SELECT `Players`.`player_name`, `Players`.`level`, `Items`.`item_name`
+	FROM `Players`
+	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
+	WHERE `Players`.`level` > 15;
+	
+	
+SELECT  `Players`.`player_name`, `Guilds`.`guild_name`, `Items`.`item_name`
+	FROM `Players`
+	JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
+	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
+	WHERE `Guilds`.`guild_name` = 'Dark Brotherhood';
+
+
+SELECT `Players`.`player_name`, `Items`.`item_name`
+	FROM `Players` 
+	LEFT JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
+	WHERE `Items`.`item_id` IS NULL;
+	
+	
+SELECT `Players`.`player_name`, `Items`.`item_name`, `Players`.`level`
+	FROM `Players`
+	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
+	WHERE  `Players`.`level` > 30;
+
+
+SELECT `Players`.`player_name`, `Items`.`item_name`, `Guilds`.`guild_level`
+	FROM `Players`
+	JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
+	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
+	WHERE `Guilds`.`guild_level` > 3;
+	
+	
+SELECT `Players`.`player_name`, `Players`.`expirience_points`, `Items`.`item_name`, `Items`.`item_type`
+	FROM `Players`
+	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
+	JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
+	WHERE `Players`.`expirience_points` > 500 AND `Items`.`item_type` = 'Weapon';
+	
+	
+SELECT `Guilds`.`guild_name` 
+	FROM `Guilds`
+	LEFT JOIN `Players` ON `Guilds`.`id` = `Players`.`guild_id`
+	WHERE `Players`.`id` IS NULL;
+
+
+SELECT `Players`.`player_name`, `Items`.`item_name`, `Items`.`rarity`
+	FROM `Players`
+	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
+	WHERE `Items`.`rarity` = 'Rare';
+	
+	
+SELECT `Players`.`player_name`, `Items`.`item_name`, `Items`.`item_type`
+	FROM `Players`
+	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
+	WHERE `Items`.`item_type` != 'Consumable';
+	
+
+SELECT `Players`.`player_name`, `Players`.`level`, `Items`.`item_name`, `Items`.`rarity`
+	FROM `Players`
+	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
+	WHERE `Players`.`level` = 25 AND `Items`.`rarity` = 'Epic';
+	
+
+SELECT `Players`.`player_name`, `Players`.`expirience_points`
+	FROM `Players`
+	WHERE `Players`.`expirience_points` > (SELECT `Players`.`expirience_points`
+														FROM `Players`
+														WHERE `Players`.`player_name` = 'Galahad');
+															
+															
+SELECT `Players`.`player_name`, `Items`.`item_name`, `Items`.`item_type`
+	FROM `Players`
+	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
+	WHERE `Items`.`item_type` = 'Armor';
+	
+	
+SELECT `Players`.`player_name`, `Guilds`.`guild_level`, `Items`.`item_name`
+	FROM `Players`
+	JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
+	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
+	WHERE `Guilds`.`guild_level` = (SELECT MAX(`Guilds`.`guild_level`)
+											  FROM `Guilds`);
+											  	  
+										  	  
+SELECT `Players`.`player_name`, `Items`.`item_name`, `Items`.`rarity`
+	FROM `Players`
+	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
+	WHERE `Items`.`rarity` = 'Rare';
+	
+
+SELECT `Players`.`player_name`
+	FROM `Players`
+	JOIN `Items` ON `Players`.`id` = `Items`.`player_id` 
+	GROUP BY `Players`.`id`
+	HAVING COUNT(`Items`.`item_id`) > (SELECT COUNT(`Items`.`item_id`)
+												  FROM `Players`
+	                                   JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
+												  WHERE `Players`.`player_name` = 'Lancelot');
+	
+SELECT `Guilds`.`guild_name`
+	FROM `Players`
+	JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id` 
+	WHERE `Players`.`level` > 20;
+	
+
+SELECT `Players`.`player_name`, `Items`.`item_name`, `Items`.`item_type`
+	FROM `Players`
+	JOIN `Items` ON `Players`.`id` = `Items`.`player_id` 
+	WHERE `Items`.`item_type` = 'Weapon' AND `Items`.`item_type` != 'Accessory';
+	
+	
+SELECT `Players`.`player_name`, `Items`.`item_name`
+	FROM `Players`
+	JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
+	JOIN `Items` ON `Players`.`id` = `Items`.`player_id` 
+	WHERE `Guilds`.`guild_name` = 'Dark Brotherhood';
+	
+
+SELECT `Players`.`player_name`, `Items`.`item_name`, COUNT(`Items`.`item_id`)
+	FROM `Players`
+	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
+	GROUP BY `Players`.`id`
+	HAVING COUNT(`Items`.`player_id`) > 1;
+	
+
+SELECT `Players`.`player_name`, `Players`.`expirience_points`
+	FROM `Players`
+	WHERE `Players`.`expirience_points` > (SELECT AVG(`Players`.`expirience_points`) 
+														FROM `Players`);
+	
+
+SELECT `Players`.`player_name`, `Items`.`item_name`, `Guilds`.`guild_level`
+	FROM `Players`
+	JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
+	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
+	WHERE `Guilds`.`guild_level` > (SELECT AVG(`Guilds`.`guild_level`)
+											  FROM `Guilds`);
+											  
+											  
+SELECT `Players`.`player_name`
+	FROM `Players`
+	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
+	WHERE `Items`.`rarity` = 'Rare' AND `Players`.`expirience_points` > (SELECT `Players`.`expirience_points`
+																								FROM `Players`
+																								WHERE `Players`.`player_name` = 'Galahad');
+																								
+																								
+SELECT `Players`.`player_name`, `Guilds`.`guild_level`
+	FROM `Players`
+	JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
+	WHERE `Guilds`.`guild_level` > (SELECT `Guilds`.`guild_level`
+											  FROM `Guilds`
+											  WHERE `Guilds`.`guild_name` = 'Dark Brotherhood');
+
+
+SELECT `Players`.`player_name`
+	FROM `Players`
+	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
+	GROUP BY `Players`.`id`
+	HAVING COUNT(`Items`.`item_id`) > (SELECT AVG(`Items`.`item_id`)
+												 FROM `Players`
+												 JOIN `Items` ON `Players`.`id` = `Items`.`player_id`);
+
+
+SELECT `Players`.`player_name`, `Players`.`expirience_points`
+	FROM `Players`
+	JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
+	WHERE `Players`.`expirience_points` > (SELECT SUM(`Players`.`expirience_points`)
+														FROM `Players`
+														JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
+														WHERE `Guilds`.`guild_name` = 'Dark Brotherhood');
+
+
+SELECT `Players`.`player_name`, `Items`.`item_name`
+	FROM `Players`
+	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
+	JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
+	WHERE `Players`.`expirience_points` > (SELECT SUM(`Players`.`expirience_points`)
+														FROM `Players`
+														JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
+														WHERE `Guilds`.`guild_name` = 'Dark Brotherhood');
+														
+														
+SELECT `Players`.`player_name`, `Players`.`expirience_points`
+	FROM `Players`
+	JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
+	WHERE `Players`.`expirience_points` > (SELECT AVG(`Players`.`expirience_points`)
+														FROM `Players`
+														JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`);
+
+
+SELECT `Players`.`player_name`, `Players`.`expirience_points`
+	FROM `Players`
+	LEFT JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
+	WHERE `Players`.`expirience_points` > 1000 AND `Players`.`guild_id` = NULL
