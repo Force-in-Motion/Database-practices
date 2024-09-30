@@ -211,9 +211,10 @@ SELECT `Players`.`player_name`, `Players`.`level`, `Items`.`item_name`, `Items`.
 
 SELECT `Players`.`player_name`, `Players`.`expirience_points`
 	FROM `Players`
-	WHERE `Players`.`expirience_points` > (SELECT `Players`.`expirience_points`
-														FROM `Players`
-														WHERE `Players`.`player_name` = 'Galahad');
+	WHERE `Players`.`expirience_points` > 
+	(SELECT `Players`.`expirience_points`
+		FROM `Players`
+		WHERE `Players`.`player_name` = 'Galahad');
 															
 															
 SELECT `Players`.`player_name`, `Items`.`item_name`, `Items`.`item_type`
@@ -226,8 +227,9 @@ SELECT `Players`.`player_name`, `Guilds`.`guild_level`, `Items`.`item_name`
 	FROM `Players`
 	JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
 	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
-	WHERE `Guilds`.`guild_level` = (SELECT MAX(`Guilds`.`guild_level`)
-											  FROM `Guilds`);
+	WHERE `Guilds`.`guild_level` = 
+	(SELECT MAX(`Guilds`.`guild_level`)
+		FROM `Guilds`);
 											  	  
 										  	  
 SELECT `Players`.`player_name`, `Items`.`item_name`, `Items`.`rarity`
@@ -240,10 +242,11 @@ SELECT `Players`.`player_name`
 	FROM `Players`
 	JOIN `Items` ON `Players`.`id` = `Items`.`player_id` 
 	GROUP BY `Players`.`id`
-	HAVING COUNT(`Items`.`item_id`) > (SELECT COUNT(`Items`.`item_id`)
-												  FROM `Players`
-	                                   JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
-												  WHERE `Players`.`player_name` = 'Lancelot');
+	HAVING COUNT(`Items`.`item_id`) > 
+	(SELECT COUNT(`Items`.`item_id`)
+		FROM `Players`
+	   JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
+		WHERE `Players`.`player_name` = 'Lancelot');
 	
 SELECT `Guilds`.`guild_name`
 	FROM `Players`
@@ -273,41 +276,46 @@ SELECT `Players`.`player_name`, `Items`.`item_name`, COUNT(`Items`.`item_id`)
 
 SELECT `Players`.`player_name`, `Players`.`expirience_points`
 	FROM `Players`
-	WHERE `Players`.`expirience_points` > (SELECT AVG(`Players`.`expirience_points`) 
-														FROM `Players`);
+	WHERE `Players`.`expirience_points` > 
+	(SELECT AVG(`Players`.`expirience_points`) 
+		FROM `Players`);
 	
 
 SELECT `Players`.`player_name`, `Items`.`item_name`, `Guilds`.`guild_level`
 	FROM `Players`
 	JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
 	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
-	WHERE `Guilds`.`guild_level` > (SELECT AVG(`Guilds`.`guild_level`)
-											  FROM `Guilds`);
+	WHERE `Guilds`.`guild_level` >
+	(SELECT AVG(`Guilds`.`guild_level`)
+		FROM `Guilds`);
 											  
 											  
 SELECT `Players`.`player_name`
 	FROM `Players`
 	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
-	WHERE `Items`.`rarity` = 'Rare' AND `Players`.`expirience_points` > (SELECT `Players`.`expirience_points`
-																								FROM `Players`
-																								WHERE `Players`.`player_name` = 'Galahad');
+	WHERE `Items`.`rarity` = 'Rare' AND `Players`.`expirience_points` > 
+	(SELECT `Players`.`expirience_points`
+		FROM `Players`
+		WHERE `Players`.`player_name` = 'Galahad');
 																								
 																								
 SELECT `Players`.`player_name`, `Guilds`.`guild_level`
 	FROM `Players`
 	JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
-	WHERE `Guilds`.`guild_level` > (SELECT `Guilds`.`guild_level`
-											  FROM `Guilds`
-											  WHERE `Guilds`.`guild_name` = 'Dark Brotherhood');
+	WHERE `Guilds`.`guild_level` > 
+	(SELECT `Guilds`.`guild_level`
+		FROM `Guilds`
+		WHERE `Guilds`.`guild_name` = 'Dark Brotherhood');
 
 
 SELECT `Players`.`player_name`
 	FROM `Players`
 	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
 	GROUP BY `Players`.`id`
-	HAVING COUNT(`Items`.`item_id`) > (SELECT AVG(`Items`.`item_id`)
-												 FROM `Players`
-												 JOIN `Items` ON `Players`.`id` = `Items`.`player_id`);
+	HAVING COUNT(`Items`.`item_id`) > 
+	(SELECT AVG(`Items`.`item_id`)
+		FROM `Players`
+		JOIN `Items` ON `Players`.`id` = `Items`.`player_id`);
 
 
 SELECT `Players`.`player_name`, `Players`.`expirience_points`
@@ -334,9 +342,10 @@ SELECT `Players`.`player_name`, `Items`.`item_name`
 SELECT `Players`.`player_name`, `Players`.`expirience_points`
 	FROM `Players`
 	JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
-	WHERE `Players`.`expirience_points` > (SELECT AVG(`Players`.`expirience_points`)
-														FROM `Players`
-														JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`);
+	WHERE `Players`.`expirience_points` > 
+	(SELECT AVG(`Players`.`expirience_points`)
+		FROM `Players`
+		JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`);
 
 
 SELECT `Players`.`player_name`, `Players`.`expirience_points`
