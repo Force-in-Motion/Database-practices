@@ -313,20 +313,22 @@ SELECT `Players`.`player_name`
 SELECT `Players`.`player_name`, `Players`.`expirience_points`
 	FROM `Players`
 	JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
-	WHERE `Players`.`expirience_points` > (SELECT SUM(`Players`.`expirience_points`)
-														FROM `Players`
-														JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
-														WHERE `Guilds`.`guild_name` = 'Dark Brotherhood');
+	WHERE `Players`.`expirience_points` > 
+	(SELECT SUM(`Players`.`expirience_points`)
+		FROM `Players`
+		JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
+		WHERE `Guilds`.`guild_name` = 'Dark Brotherhood');
 
 
 SELECT `Players`.`player_name`, `Items`.`item_name`
 	FROM `Players`
 	JOIN `Items` ON `Players`.`id` = `Items`.`player_id`
 	JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
-	WHERE `Players`.`expirience_points` > (SELECT SUM(`Players`.`expirience_points`)
-														FROM `Players`
-														JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
-														WHERE `Guilds`.`guild_name` = 'Dark Brotherhood');
+	WHERE `Players`.`expirience_points` > 
+	(SELECT SUM(`Players`.`expirience_points`)
+		FROM `Players`
+		JOIN `Guilds` ON `Players`.`guild_id` = `Guilds`.`id`
+		WHERE `Guilds`.`guild_name` = 'Dark Brotherhood');
 														
 														
 SELECT `Players`.`player_name`, `Players`.`expirience_points`
