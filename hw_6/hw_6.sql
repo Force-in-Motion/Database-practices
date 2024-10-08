@@ -46,7 +46,9 @@ INSERT INTO `Products` (`product_name`, `price`, `category_id`) VALUES
 SELECT  `Products`.`product_name`, `Products`.`price` 
 	FROM `Products`
 	JOIN `Categories` ON `Products`.`category_id` = `Categories`.`id`
-	WHERE `Products`.`price` > (SELECT AVG(`Products`.`price`) FROM `Products`);
+	WHERE `Products`.`price` >
+	(SELECT AVG(`Products`.`price`)
+		FROM `Products`);
 	
 	
 SELECT  `Products`.`product_name`, `Products`.`price`, `Categories`.`category_name`
@@ -64,16 +66,19 @@ SELECT `Categories`.`category_name`, COUNT(`Products`.`id`)
 SELECT `Products`.`product_name`, AVG(`Products`.`price`)
 	FROM `Products`
 	JOIN `Categories` ON `Products`.`category_id` = `Categories`.`id`
-	WHERE `Products`.`price` > (SELECT AVG(`Products`.`price`)
-											FROM `Products`
-											JOIN `Categories` ON `Products`.`category_id` = `Categories`.`id`);
+	WHERE `Products`.`price` > 
+	(SELECT AVG(`Products`.`price`)
+		FROM `Products`
+		JOIN `Categories` ON `Products`.`category_id` = `Categories`.`id`);
 
 
 SELECT `Categories`.`category_name` 
 	FROM `Products`
 	JOIN `Categories` ON `Products`.`category_id` = `Categories`.`id`
 	GROUP BY `Categories`.`id`
-	HAVING AVG(`Products`.price) > (SELECT AVG(`Products`.`price`) FROM `Products`);
+	HAVING AVG(`Products`.price) >
+	(SELECT AVG(`Products`.`price`)
+		FROM `Products`);
 
 
 SELECT `Categories`.`category_name`, MAX(`Products`.`price`)
@@ -92,24 +97,28 @@ SELECT `Categories`.`category_name`, COUNT(`Products`.`id`)
 	FROM `Products`
 	JOIN `Categories` ON `Products`.`category_id` = `Categories`.`id`
 	GROUP BY `Categories`.`id`
-	HAVING COUNT(`Products`.`id`) > (SELECT AVG(`Products`.`id`) FROM `Products`);
+	HAVING COUNT(`Products`.`id`) >
+	(SELECT AVG(`Products`.`id`)
+		FROM `Products`);
 
 
 SELECT `Products`.`product_name`, `Products`.`price`
 	FROM `Products`
 	JOIN `Categories` ON `Products`.`category_id` = `Categories`.`id`
-	WHERE `Products`.`price` > (SELECT AVG(`Products`.`price`)
-											FROM `Products`
-											JOIN `Categories` ON `Products`.`category_id` = `Categories`.`id`);
+	WHERE `Products`.`price` >
+	(SELECT AVG(`Products`.`price`)
+		FROM `Products`
+		JOIN `Categories` ON `Products`.`category_id` = `Categories`.`id`);
 
 
 SELECT `Categories`.`category_name`, MIN(`Products`.`price`)
 	FROM `Products`
 	JOIN `Categories` ON `Products`.`category_id` = `Categories`.`id`
 	GROUP BY `Categories`.`id`
-	HAVING MIN(`Products`.`price`) > (SELECT AVG(`Products`.`price`)
-													FROM `Products`
-													JOIN `Categories` ON `Products`.`category_id` = `Categories`.`id`);
+	HAVING MIN(`Products`.`price`) >
+	(SELECT AVG(`Products`.`price`)
+		FROM `Products`
+		JOIN `Categories` ON `Products`.`category_id` = `Categories`.`id`);
  										
 
 SELECT `Categories`.`category_name`, COUNT(`Products`.`id`)
@@ -150,12 +159,14 @@ SELECT `Categories`.`category_name`, COUNT(`Products`.`id`)
 	FROM `Products`
 	JOIN `Categories` ON `Products`.`category_id` = `Categories`.`id`	
 	GROUP BY `Categories`.`id`
-	HAVING COUNT(`Products`.`id`) > (SELECT AVG(`Products`.`id`)
-													FROM `Products`
-													JOIN `Categories` ON `Products`.`category_id` = `Categories`.`id`)
-	AND AVG(`Products`.`price`) < (SELECT AVG(`Products`.`price`)
-													FROM `Products`
-													JOIN `Categories` ON `Products`.`category_id` = `Categories`.`id`);	
+	HAVING COUNT(`Products`.`id`) >
+	(SELECT AVG(`Products`.`id`)
+		FROM `Products`
+		JOIN `Categories` ON `Products`.`category_id` = `Categories`.`id`)
+	AND AVG(`Products`.`price`) <
+	(SELECT AVG(`Products`.`price`)
+		FROM `Products`
+		JOIN `Categories` ON `Products`.`category_id` = `Categories`.`id`);	
 	
 	
 	
